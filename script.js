@@ -57,9 +57,12 @@ const checkTriangle = () => {
 
   if (isSideInteger(filterInteger(firstSideInputText))) {
     showSweetAlert();
-    console.log('OK');
   } else {
     showErrorAlert(errorAlert.error.notNumber);
-    console.log('ERROR');
   }
 };
+
+$('#triangleInputForm').submit(() => {
+  checkTriangle();
+  return false;
+})

@@ -12,61 +12,59 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css">
+  <!-- <link rel="stylesheet" href="./style.css"> -->
 
-  <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
-  <script src="./script.js"></script>
   <title>Triangles</title>
 </head>
 
 <body>
-
+  
   <div class="row">
     <!-- Card -->
     <div class="card col-md-3 offset-md-4">
-
+      
       <!-- Card body -->
       <div class="card-body wider">
-
+        
         <!-- Material form register -->
-        <form>
+        <form id="triangleInputForm">
           <p class="h4 text-center py-4">Введите стороны треугольника</p>
-
+          
           <!-- Material input text -->
           <div class="md-form">
             <i class="fa prefix grey-text">1</i>
             <input type="text" id="firstSideInput" class="form-control">
             <label for="firstSideInput" class="font-weight-light">Первая сторона</label>
           </div>
-
+          
           <!-- Material input text -->
           <div class="md-form">
             <i class="fa prefix grey-text">2</i>
             <input type="text" id="secondSideInput" class="form-control">
             <label for="secondSideInput" class="font-weight-light">Вторая сторона</label>
           </div>
-
+          
           <!-- Material input text -->
           <div class="md-form">
             <i class="fa prefix grey-text">3</i>
             <input type="text" id="thirdSideInput" class="form-control">
             <label for="thirdSideInput" class="font-weight-light">Третья сторона</label>
           </div>
-
+          
           <div class="text-center py-4 mt-3">
-            <button class="btn btn-cyan" type="submit" onclick="checkTriangle()">Узнать тип треугольника</button>
+            <button class="btn btn-cyan" type="submit">Узнать тип треугольника</button>
           </div>
         </form>
-
+        
       </div>
       <!-- Card body -->
     </div>
     <!-- Card -->
-
+    
   </div>
-
-
+  
+  
   <!-- JQuery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -75,6 +73,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+  <script src="./script.js"></script>
 </body>
 
 </html>
