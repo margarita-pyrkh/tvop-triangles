@@ -1,16 +1,8 @@
 
+
 let firstSideInputText;
 let secondSideInputText;
 let thirdSideInputText;
-
-const errorAlert = {
-  title: 'Введены некорректные данные',
-  error: {
-    tooLongValue: 'Данное число не входит в диапазон допустимых значений',
-    notNumber: 'Введено не числовое значение',
-    notInteger: 'Введено не целое число'
-  }
-};
 
 const getInputs = () => {
   firstSideInputText = document.getElementById("firstSideInput").value;
@@ -40,17 +32,7 @@ const filterInteger = (value) =>
 const isSideInteger = (sideValue) => Number.isInteger(sideValue);
 const isValueSafeInteger = (value) => Number.isSafeInteger(value);
 
-const showSweetAlert = () => {
-  swal("Good job!", "You clicked the button!", "success");
-};
 
-const showErrorAlert = (errorMessage) => {
-  swal({
-    type: "error",
-    title: errorAlert.title,
-    text: errorMessage
-  });
-};
 
 const checkTriangle = () => {
   getInputs();
@@ -65,4 +47,4 @@ const checkTriangle = () => {
 $('#triangleInputForm').submit(() => {
   checkTriangle();
   return false;
-})
+});
