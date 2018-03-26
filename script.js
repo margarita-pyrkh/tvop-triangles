@@ -18,8 +18,21 @@ const getInputs = () => {
   thirdSideInputText = document.getElementById("thirdSideInput").value;
 };
 
-const isTriangleIsosceles = (firstSide, secondSide) => firstSide === secondSide;
-const isTriangleEquilateral = (firstSide, secondSide, thirdSide) => firstSide === secondSide === thirdSide;
+const isTriangleIsosceles = (firstSide, secondSide, thirdSide) => {
+  if (isTriangle())
+    return (firstSide === secondSide) || (firstSide === thirdSide) || (secondSide || thirdSide);
+};
+
+const isTriangleEquilateral = (firstSide, secondSide, thirdSide) => { 
+  if (isTriangle())
+    return firstSide === secondSide === thirdSide;
+
+};
+
+const isTriangle = (firstSide, secondSide, thirdSide) => 
+  (firstSide + secondSide) > thirdSide &&
+  (firstSide + thirdSide) > secondSide &&
+  (thirdSide + secondSide) > firstSide
 
 const filterInteger = (value) => 
   (/^(\+)?([0-9]+)$/.test(value)) ? Number(value) : NaN;
@@ -41,9 +54,12 @@ const showErrorAlert = (errorMessage) => {
 
 const checkTriangle = () => {
   getInputs();
+
   if (isSideInteger(filterInteger(firstSideInputText))) {
     showSweetAlert();
+    console.log('OK');
   } else {
     showErrorAlert(errorAlert.error.notNumber);
+    console.log('ERROR');
   }
 };
