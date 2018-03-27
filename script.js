@@ -33,8 +33,8 @@ const showErrorAlert = (errorMessage, title = errorAlert.title.incorrectData) =>
 const showSuccessAlert = (triangleType = triangleTypes.default) => {
   swal({
     type: "success",
-    text: "Определение типа треугольника", 
-    title: `Тип треугольника - ${triangleType}`, 
+    text: `Тип треугольника - ${triangleType}`, 
+    title: "Определен тип треугольника", 
   });
 };
 
@@ -45,10 +45,10 @@ const getInputs = () => {
 };
 
 const isTriangleIsosceles = (firstSide, secondSide, thirdSide) =>
-    (firstSide === secondSide) || (firstSide === thirdSide) || (secondSide || thirdSide);
+    (firstSide === secondSide) || (firstSide === thirdSide) || (secondSide === thirdSide);
 
 const isTriangleEquilateral = (firstSide, secondSide, thirdSide) => {
-  (firstSide === secondSide) && (firstSide === thirdSide) && (secondSide === thirdSide);
+  return (firstSide === secondSide) && (firstSide === thirdSide) && (secondSide === thirdSide);
 };
 
 const isTriangle = (firstSide, secondSide, thirdSide) => 
@@ -65,26 +65,18 @@ const checkSide = (side) => {
   let triangleSideValue = filterPositiveInteger(side);
 
   if (!!triangleSideValue && !hasErrors) {
-    if (isValueSafeInteger(triangleSideValue)) {
-      return true;
-    } else {
+    if (!isValueSafeInteger(triangleSideValue)) {
       showErrorAlert(errorAlert.error.tooLongValue);
-      return false;
+      hasErrors = true;
     }
   } else {
     showErrorAlert(errorAlert.error.notNumber);
-    return false;
+    hasErrors = true;
   }
 };
 
-const checkTriangleSides = () => {
-  [ firstSideInputText, secondSideInputText, thirdSideInputText ]
-  .forEach((side) => {
-    if (!checkSide(side)) {
-      hasErrors = true;
-    };
-  });
-};
+const checkTriangleSides = () =>
+  [firstSideInputText, secondSideInputText, thirdSideInputText].forEach(side => checkSide(side));
 
 const convertStringSideSizeToInt = (triangleStringSides) => triangleStringSides.map((side) => Number(side));
 
@@ -111,6 +103,7 @@ const recognizeTriangle = () => {
   if (!hasErrors) {
     checkTriangleType();
   }
+  hasErrors = false;
 };
 
 $('#triangleInputForm').submit(() => {
