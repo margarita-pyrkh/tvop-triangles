@@ -1,8 +1,32 @@
-
-
 let firstSideInputText;
 let secondSideInputText;
 let thirdSideInputText;
+
+let hasErrors = false;
+
+const errorAlert = {
+  title: 'Введены некорректные данные',
+  error: {
+    tooLongValue: 'Данное число не входит в диапазон допустимых значений',
+    notNumber: 'Введено не числовое значение'
+  }
+};
+
+const showErrorAlert = (errorMessage) => {
+  swal({
+    type: "error",
+    title: errorAlert.title,
+    text: errorMessage
+  });
+};
+
+const showSweetAlert = () => {
+  swal(
+    "Good job!", 
+    "You clicked the button!", 
+    "success"
+  );
+};
 
 const getInputs = () => {
   firstSideInputText = document.getElementById("firstSideInput").value;
@@ -26,25 +50,45 @@ const isTriangle = (firstSide, secondSide, thirdSide) =>
   (firstSide + thirdSide) > secondSide &&
   (thirdSide + secondSide) > firstSide
 
-const filterInteger = (value) => 
-  (/^(\+)?([0-9]+)$/.test(value)) ? Number(value) : NaN;
+const filterPositiveInteger = (value) => 
+  (/^\+?(0|[1-9]\d*)$/.test(value)) ? Number(value) : NaN;
 
-const isSideInteger = (sideValue) => Number.isInteger(sideValue);
 const isValueSafeInteger = (value) => Number.isSafeInteger(value);
 
+const checkSide = (side) => {
+  let triangleSideValue = filterPositiveInteger(side);
 
-
-const checkTriangle = () => {
-  getInputs();
-
-  if (isSideInteger(filterInteger(firstSideInputText))) {
-    showSweetAlert();
+  if (!!triangleSideValue && !hasErrors) {
+    if (isValueSafeInteger(triangleSideValue)) {
+      return true;
+    } else {
+      showErrorAlert(errorAlert.error.tooLongValue);
+      return false;
+    }
   } else {
     showErrorAlert(errorAlert.error.notNumber);
+    return false;
+  }
+};
+
+const checkTriangleSides = () => {
+  [ firstSideInputText, secondSideInputText, thirdSideInputText ]
+  .forEach((side) => {
+    if (!checkSide(side)) {
+      hasErrors = true;
+    };
+  });
+};
+
+const recognizeTriangle = () => {
+  getInputs();
+  checkTriangleSides();
+  if (!hasErrors) {
+    showSweetAlert();
   }
 };
 
 $('#triangleInputForm').submit(() => {
-  checkTriangle();
+  recognizeTriangle();
   return false;
 });
