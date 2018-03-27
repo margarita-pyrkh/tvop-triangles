@@ -5,27 +5,37 @@ let thirdSideInputText;
 let hasErrors = false;
 
 const errorAlert = {
-  title: 'Введены некорректные данные',
+  title: {
+    incorrectData: 'Введены некорректные данные',
+    wrongTriangleType: 'Данные стороны не образуют треугольник'
+  },
   error: {
     tooLongValue: 'Данное число не входит в диапазон допустимых значений',
-    notNumber: 'Введено не числовое значение'
+    notNumber: 'Введено не числовое значение',
+    notTriangle: 'Пожалуйста, введите корректные данные'
   }
 };
 
-const showErrorAlert = (errorMessage) => {
+const triangleTypes = {
+  equilateral: "равносторонний",
+  isosceles: "равнобедренный",
+  default: "неравносторонний"
+};
+
+const showErrorAlert = (errorMessage, title = errorAlert.title.incorrectData) => {
   swal({
     type: "error",
-    title: errorAlert.title,
-    text: errorMessage
+    text: errorMessage,
+    title
   });
 };
 
-const showSweetAlert = () => {
-  swal(
-    "Good job!", 
-    "You clicked the button!", 
-    "success"
-  );
+const showSuccessAlert = (triangleType = triangleTypes.default) => {
+  swal({
+    type: "success",
+    text: "Определение типа треугольника", 
+    title: `Тип треугольника - ${triangleType}`, 
+  });
 };
 
 const getInputs = () => {
@@ -34,15 +44,11 @@ const getInputs = () => {
   thirdSideInputText = document.getElementById("thirdSideInput").value;
 };
 
-const isTriangleIsosceles = (firstSide, secondSide, thirdSide) => {
-  if (isTriangle())
-    return (firstSide === secondSide) || (firstSide === thirdSide) || (secondSide || thirdSide);
-};
+const isTriangleIsosceles = (firstSide, secondSide, thirdSide) =>
+    (firstSide === secondSide) || (firstSide === thirdSide) || (secondSide || thirdSide);
 
-const isTriangleEquilateral = (firstSide, secondSide, thirdSide) => { 
-  if (isTriangle())
-    return firstSide === secondSide === thirdSide;
-
+const isTriangleEquilateral = (firstSide, secondSide, thirdSide) => {
+  (firstSide === secondSide) && (firstSide === thirdSide) && (secondSide === thirdSide);
 };
 
 const isTriangle = (firstSide, secondSide, thirdSide) => 
@@ -80,11 +86,30 @@ const checkTriangleSides = () => {
   });
 };
 
+const convertStringSideSizeToInt = (triangleStringSides) => triangleStringSides.map((side) => Number(side));
+
+const checkTriangleType = () => {
+  let sidesValue = 
+    convertStringSideSizeToInt([firstSideInputText, secondSideInputText, thirdSideInputText]);
+
+  if (isTriangle(...sidesValue)) {
+    if (isTriangleEquilateral(...sidesValue)) {
+      showSuccessAlert(triangleTypes.equilateral);
+    } else if (isTriangleIsosceles(...sidesValue)) {
+      showSuccessAlert(triangleTypes.isosceles);
+    } else {
+      showSuccessAlert(triangleTypes.default);
+    }
+  } else {
+    showErrorAlert(errorAlert.error.notTriangle, errorAlert.title.wrongTriangleType);
+  }
+};
+
 const recognizeTriangle = () => {
   getInputs();
   checkTriangleSides();
   if (!hasErrors) {
-    showSweetAlert();
+    checkTriangleType();
   }
 };
 
