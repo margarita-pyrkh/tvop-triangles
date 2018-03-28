@@ -4,6 +4,8 @@ let thirdSideInputText;
 
 let hasErrors = false;
 
+const referenceText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer laoreet pulvinar turpis ac varius. Nam id semper lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed tincidunt mollis urna. Nam quis lectus eget nulla malesuada eleifend egestas vitae turpis. Nulla molestie tortor a luctus lobortis. Vestibulum ut quam dignissim, blandit quam eget, mattis tortor. Phasellus in dui magna. Sed dignissim convallis velit, sit amet eleifend erat vulputate non. Aenean sagittis viverra arcu pretium ornare. Morbi a cursus mauris. Suspendisse potenti. Etiam sed lectus et massa accumsan tempus a ut risus.`;
+
 const errorAlert = {
   title: {
     incorrectData: 'Введены некорректные данные',
@@ -11,7 +13,7 @@ const errorAlert = {
   },
   error: {
     tooLongValue: 'Данное число не входит в диапазон допустимых значений',
-    notNumber: 'Введено не числовое значение',
+    notNumber: 'Введено нечисловое значение',
     notTriangle: 'Пожалуйста, введите корректные данные'
   }
 };
@@ -36,6 +38,16 @@ const showSuccessAlert = (triangleType = triangleTypes.default) => {
     text: `Тип треугольника - ${triangleType}`, 
     title: "Определен тип треугольника", 
   });
+};
+
+const showReference = () => {
+  swal({
+    type: "question",
+    title: "Справка",
+    text: referenceText,
+    width: 600,
+    padding: 50,
+  })
 };
 
 const getInputs = () => {
@@ -109,4 +121,8 @@ const recognizeTriangle = () => {
 $('#triangleInputForm').submit(() => {
   recognizeTriangle();
   return false;
+});
+
+document.getElementById('ref-btn').addEventListener("click", () => {
+  showReference();
 });
